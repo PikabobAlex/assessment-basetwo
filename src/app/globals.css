@@ -2,32 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
+/* VAGRoundedStd-Black.oft */
+
+/* @font-face {
+  font-family: 'VAGRoundedStd-Black';
+  src: url(/assets/fonts/VAGRoundedStd-Black.oft) format('oft');
+  font-weight: 900;
+  font-style: normal;
+} */
+
+/* VAGRoundedStd-Bold.oft */
+
+/* @font-face {
+  font-family: 'VAGRoundedStd-Bold';
+  src: url(/assets/fonts/VAGRoundedStd-Bold.oft) format('oft');
+  font-weight: 700;
+  font-style: normal;
+} */
+
+/* VAGRoundedStd-Light.oft */
+
+/* @font-face {
+  font-family: 'VAGRoundedStd-Light';
+  src: url(/assets/fonts/VAGRoundedStd-Light.oft) format('oft');
+  font-weight: 300;
+  font-style: normal;
+} */
+
+/* VAGRoundedStd-Thin.oft */
+
+/* @font-face {
+  font-family: 'VAGRoundedStd-Thin';
+  src: url(/assets/fonts/VAGRoundedStd-Thin.oft) format('oft');
+  font-weight: 100;
+  font-style: normal;
+} */
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+} */
+html{
+  height: 100vh;
+  height: 100%;
+  height: 100svh;
+  width: 100%;
+  font-family: 'VAGRoundedStd-Light', sans-serif;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  width: 100%;
+  height: fit-content;
+}
+
+main
+{
+  overflow-x: hidden;
+  width: 100vw;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	.text-balance {
+		text-wrap: balance;
+	}
 }

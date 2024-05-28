@@ -1,113 +1,346 @@
+"use client";
 import Image from "next/image";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import * as React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+gsap.registerPlugin(ScrollTrigger);
+
+function Section1() {
+	const router = useRouter();
+
+	React.useEffect(() => {
+		// spin when scroll
+
+		gsap.set(".spin", { transformOrigin: "center", x: "50%" });
+		gsap.to(".spin", {
+			scrollTrigger: {
+				trigger: "#section1",
+				start: "top top",
+				end: "bottom top",
+				scrub: true,
+			},
+			rotation: 45,
+			ease: "none",
+		});
+
+		return () => {
+			// cleanup
+			gsap.killTweensOf(".spin");
+		};
+	}, []);
+
+	return (
+		<section id="section1" className="relative h-[100vw] overflow-hidden px-4 mb-12">
+			<img src="/assets/imgs/Asset 2.png" alt="" className="spin absolute top-0 right-0" style={{transform:"translateX(50%)"}} />
+			<img src="/assets/imgs/Asset 1.png" alt="" className="absolute bottom-0 left-0 w-[65%] translate-x-[20%] -translate-y-[5%]" />
+			<img src="/assets/imgs/Asset 4.png" alt="" className="absolute bottom-0 left-0 w-[84px] translate-x-[20%] -translate-y-[5%]" onClick={() => router.push("/product")} />
+		</section>
+	);
+}
+
+function Section2() {
+	const [spin, setSpin] = React.useState(0);
+	const router = useRouter();
+
+	return (
+		<section
+			onClick={() => {
+				setSpin((prev) => (prev + 1) % 4);
+			}}
+			className="relative flex flex-col justify-center px-2 gap-2 mb-12 ml-4 h-[75vw]">
+			<AnimatePresence>{new Array(4).fill(0).map((_, i) => spin === i && <motion.img key={i} transition={{ duration: 0.75, ease: "anticipate" }} initial={{ x: "-50%", opacity: 0 }} animate={{ x: "0%", opacity: 1 }} exit={{ x: "50%", opacity: 0 }} src={`/assets/imgs/section2spin${i + 1}.png`} className="absolute top-0 left-0 w-[70vw]" />)}</AnimatePresence>
+			<div className="relative self-end flex flex-col leading-none w-[40vw]">
+				<span className="block text-[36px] font-[800] leading-[0.75] w-fit">Enrich every moment</span>
+				<span className="block text-[18px]">
+					of your life <br /> with our lovingly <br /> crafted hijabs
+				</span>
+				<img src="/assets/imgs/Asset 4.png" alt="" className="absolute bottom-0 left-0 w-[84px] translate-x-[-100%] translate-y-[75%]" onClick={() => router.push("/product")}/>
+			</div>
+		</section>
+	);
+}
+
+function Section3() {
+	const [spin, setSpin] = React.useState(0);
+	const router = useRouter();
+
+	return (
+		<section
+			onClick={() => {
+				setSpin((prev) => (prev + 1) % 4);
+			}}
+			className="relative flex flex-col justify-center px-2 gap-2 mb-12 ml-4 h-[75vw]">
+			<AnimatePresence>
+				{new Array(4).fill(0).map(
+					(_, i) =>
+						spin === i && (
+							<motion.div key={i} transition={{ duration: 1, ease: "anticipate" }} initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} className="absolute top-1/2 right-0 size-full origin-top-right">
+								<img src={`/assets/imgs/section3spin${i + 1}.png`} alt="" className="absolute right-0 top-[-50%] w-[70vw] h-auto" />
+							</motion.div>
+						)
+				)}
+			</AnimatePresence>
+			<div className="relative flex flex-col leading-none w-[40vw]">
+				<span className="block text-[36px] font-[800] leading-[0.75] w-fit">Enrich every moment</span>
+				<span className="block text-[32px]">of your</span>
+				<span className="block text-[36px] font-[800] leading-[0.75] w-fit">
+					Everyday <br />
+					Need
+				</span>
+				<img src="/assets/imgs/Asset 4.png" alt="" className="absolute bottom-0 right-0 w-[84px] translate-x-[60%] translate-y-[90%]" onClick={() => router.push("/product")}/>
+			</div>
+		</section>
+	);
+}
+
+function Section4() {
+	React.useEffect(() => {
+		const caro1 = document.getElementById("caro1") as HTMLImageElement;
+		const caro2 = document.getElementById("caro2") as HTMLImageElement;
+		const caro3 = document.getElementById("caro3") as HTMLImageElement;
+
+		gsap.to("#caro1", {
+			scrollTrigger: {
+				trigger: "#caro1",
+				start: "top bottom",
+				end: "center center",
+				scrub: true,
+			},
+			x: -100,
+			ease: "none",
+		});
+
+		gsap.fromTo(
+			"#caro2",
+			{ x: -100 },
+			{
+				scrollTrigger: {
+					trigger: "#caro2",
+					start: "top bottom",
+					end: "center center",
+					scrub: true,
+				},
+				x: -0,
+				ease: "none",
+			}
+		);
+
+		gsap.to("#caro3", {
+			scrollTrigger: {
+				trigger: "#caro3",
+				start: "top bottom",
+				end: "center center",
+				scrub: true,
+			},
+			x: -100,
+			ease: "none",
+		});
+
+		return () => {
+			// cleanup
+			gsap.killTweensOf(caro1);
+			gsap.killTweensOf(caro2);
+			gsap.killTweensOf(caro3);
+		};
+	}, []);
+
+	return (
+		<section id="section4" className="relative grid grid-rows-[1fr_0.6fr_1fr] gap-4 h-[80vw]">
+			<div className="px-4">
+				<img id="caro1" src="/assets/imgs/caro_1.png" alt="" className="max-w-none h-full w-auto" />
+			</div>
+			<div className="px-4">
+				<img id="caro2" src="/assets/imgs/caro_2.png" alt="" className="max-w-none h-full w-auto" />
+			</div>
+			<div className="px-4">
+				<img id="caro3" src="/assets/imgs/caro_3.png" alt="" className="max-w-none h-full w-auto" />
+			</div>
+		</section>
+	);
+}
+
+function Section5() {
+	const router = useRouter();
+	React.useEffect(() => {
+		gsap.fromTo(
+			"section#section5 #ele1",
+			{ x: "-250%", y: "-75%" },
+			{
+				scrollTrigger: {
+					trigger: "#section5",
+					start: "top bottom",
+					end: "center center",
+					scrub: true,
+					toggleActions: "play none none reset",
+				},
+				x: "-120%",
+				ease: "none",
+			}
+		);
+
+		gsap.fromTo(
+			"section#section5 #ele3",
+			{ x: "250%", y: "-80%" },
+			{
+				scrollTrigger: {
+					trigger: "#section5",
+					start: "top bottom",
+					end: "center center",
+					scrub: true,
+					toggleActions: "play none none reset",
+				},
+				x: "20%",
+				ease: "none",
+			}
+		);
+		gsap.fromTo(
+			"section#section5 #ele4",
+			{ x: "250%", y: "20%" },
+			{
+				scrollTrigger: {
+					trigger: "#section5",
+					start: "top bottom",
+					end: "center center",
+					scrub: true,
+					toggleActions: "play none none reset",
+				},
+				x: "90%",
+				ease: "none",
+			}
+		);
+		return () => {
+			// cleanup
+			gsap.killTweensOf("section#section5 #ele1");
+			gsap.killTweensOf("section#section5 #ele3");
+		};
+	}, []);
+	return (
+		<section id="section5" className="relative h-[70vw] bg-[url(/assets/imgs/section5bg.png)] bg-cover overflow-hidden">
+			<img className="absolute bottom-0 left-0 w-[80vmin]" src="/assets/imgs/section5orna.png"></img>
+			<img id="ele1" className="absolute left-1/2 top-1/2 w-[40vmin]" src="/assets/imgs/section5left.png" alt="" />
+			<img id="ele2" className="absolute left-1/2 top-1/2 w-[40vmin] translate-x-[-50%] translate-y-[-20%]" src="/assets/imgs/section5center.png" alt="" />
+			<img id="ele3" className="absolute left-1/2 top-1/2 w-[40vmin]" src="/assets/imgs/section5right1.png" alt="" />
+			<img id="ele4" className="absolute left-1/2 top-1/2 w-[20vmin]" src="/assets/imgs/Asset 4.png" alt="" onClick={() => router.push("/product")} />
+		</section>
+	);
+}
+
+function Section6() {
+	React.useEffect(() => {
+		gsap.fromTo(
+			"section#section6 #ele1",
+			{ x: "-50%" },
+			{
+				scrollTrigger: {
+					trigger: "#section6",
+					start: () => "top bottom",
+					end: () => "center center",
+					scrub: true,
+					toggleActions: "play none none reset",
+				},
+				x: "0%",
+				ease: "none",
+			}
+		);
+
+		gsap.fromTo(
+			"section#section6 #ele2",
+			{ y: "-20%" },
+			{
+				scrollTrigger: {
+					trigger: "#section6",
+					start: () => "top bottom",
+					end: () => "center center",
+					scrub: true,
+					toggleActions: "play none none reset",
+				},
+				y: "0%",
+				ease: "none",
+			}
+		);
+
+		gsap.fromTo(
+			"section#section6 #ele3",
+			{ y: "20%" },
+			{
+				scrollTrigger: {
+					trigger: "#section6",
+					start: () => "top bottom",
+					end: () => "center center",
+					scrub: true,
+					toggleActions: "play none none reset",
+				},
+				y: "0%",
+				ease: "none",
+			}
+		);
+
+		gsap.fromTo(
+			"section#section6 #ele4",
+			{ x: "50%" },
+			{
+				scrollTrigger: {
+					trigger: "#section6",
+					start: () => "top bottom",
+					end: () => "center center",
+					scrub: true,
+					toggleActions: "play none none reset",
+				},
+				x: "0%",
+				ease: "none",
+			}
+		);
+
+		return () => {
+			// cleanup
+			gsap.killTweensOf("section#section6 #ele1");
+			gsap.killTweensOf("section#section6 #ele2");
+			gsap.killTweensOf("section#section6 #ele3");
+			gsap.killTweensOf("section#section6 #ele4");
+		};
+	}, []);
+	return (
+		<section id="section6" className="h-[75vw] bg-[#ffcf00] w-full overflow-hidden relative">
+			<img className="absolute top-0 left-0 w-[80vmin]" src="/assets/imgs/section6orna.png"></img>
+			<img id="ele1" className="absolute origin-center w-full" src="/assets/imgs/section6left.webp" alt="" />
+			<img id="ele2" className="absolute origin-center w-full" src="/assets/imgs/section6top.webp" alt="" />
+			<img id="ele3" className="absolute origin-center w-full" src="/assets/imgs/section6bottom.webp" alt="" />
+			<img id="ele4" className="absolute origin-center w-full" src="/assets/imgs/section6right.webp" alt="" />
+			<div className="absolute top-[5vmin] left-[5vmin] size-full">
+				<div className="relative flex flex-col leading-none w-[60vw] text-white">
+					<span className="block text-[32px]">Varisha,for</span>
+					<span className="block text-[36px] font-[800] leading-[0.9] w-fit">
+						everyone, <br />
+						everyday...
+					</span>
+				</div>
+			</div>
+		</section>
+	);
+}
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+	return (
+		<>
+			<main>
+				<Section1 />
+				<section className="flex px-2 gap-2 mb-12">
+					<div className="w-full flex flex-col grow text-right">
+						<span className="block text-[32px] tracking-tighter leading-[0.8] text-nowrap">Welcome to</span>
+						<span className="block text-[47px] tracking-tighter leading-none font-[800]">Varisha</span>
+					</div>
+					<div className="w-full leading-[1.15] text-[10px]">
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper</p>
+					</div>
+				</section>
+				<Section2 />
+				<Section3 />
+				<Section4 />
+				<Section5 />
+				<Section6 />
+			</main>
+		</>
+	);
 }
