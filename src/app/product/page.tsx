@@ -4,19 +4,21 @@ import * as React from "react";
 import _ from "lodash";
 import { gsap } from "gsap";
 import { useInView } from "framer-motion";
+import { twMerge } from "tailwind-merge";
 
 function Container({ children }: Readonly<{ children: React.ReactNode }>) {
 	const ref = React.useRef(null);
-	const isInView = useInView(ref, { once: true });
+	const isInView = useInView(ref, { once: false });
 	return (
 		<div
 			ref={ref}
-			className="mb-12 h-screen flex flex-col justify-center items-center bg-[#f0f0f0] text-[#333] p-8 w-full rounded-xl shadow-lg"
-			style={{
-				transform: isInView ? "none" : "translateX(-200px)",
-				opacity: isInView ? 1 : 0,
-				transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
-			}}>
+			className={twMerge("mb-12 h-screen flex flex-col justify-center items-center bg-[#f0f0f0] text-[#333] p-8 w-full rounded-xl shadow-lg transition-all duration-500", isInView ? "opacity-100" : "opacity-0" , isInView ? "translate-x-0" : "translate-x-[-200px]")}
+			// style={{
+			// 	transform: isInView ? "none" : "translateX(-200px)",
+			// 	opacity: isInView ? 1 : 0,
+			// 	transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
+			// }}
+			>
 			{children}
 		</div>
 	);
@@ -33,7 +35,7 @@ export default function Page() {
 	}, []);
 
 	return products.length > 0 ? (
-		<main className="pt-24 px-8">
+		<main className="pt-24 px-8 transition-all">
 			{products.map((product) => {
 					return (
 						<React.Fragment key={product.id}>
